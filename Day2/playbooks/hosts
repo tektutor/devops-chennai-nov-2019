@@ -1,0 +1,17 @@
+[all]
+ubuntu1 ansible_port=2001 
+ubuntu2 ansible_port=2002
+#windows ansible_winrm_transport=basic ansible_winrm_server_cert_validation=ignore ansible_connection=winrm ansible_port=5985 ansible_user=RPS ansible_password=rps@1
+
+[all:vars]
+ansible_user=root
+ansible_host=localhost
+ansible_private_key_file=/home/rps/.ssh/id_rsa
+ansible_become_user=root
+ansible_become_password=root
+
+[dev]
+ubuntu1
+
+[qa]
+ubuntu[1:2]

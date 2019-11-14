@@ -1,0 +1,27 @@
+- name: This playbook will provision docker containers
+  hosts: localhost
+  
+  tasks:
+    - name: Delete any containers that are already running
+      shell: docker rm -f $(docker ps -aq)
+      ignore_errors: yes
+
+    - name: Create ubuntu containers
+      docker_container:
+        name: "ubuntu{{item}}"
+        image: "boa/ansible-ubuntu"
+        state: started
+        ports:
+          - "800{{item}}:80"
+          - "200{{item}}:22" 
+      with_sequence: start=1 end=4
+
+    - name: Create centos containers
+      docker_container:
+        name: "centos{{item}}"
+        image: "boa/ansible-centos"
+        state: started
+        ports:
+          - "900{{item}}:80"
+          - "300{{item}}:22" 
+      with_sequence: start=1 end=4

@@ -1,0 +1,9 @@
+- name: This playbook will install, configure and deploy web pages into nginx
+  hosts: app_servers
+  become: yes
+  vars_files:
+    - nginx-vars.yml
+  tasks:
+    - include: "install-nginx-{{ansible_distribution|lower}}.yml"
+    - include: "configure-nginx-{{ansible_distribution|lower}}.yml"
+    - include: common-nginx-tasks.yml      

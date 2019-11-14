@@ -1,0 +1,8 @@
+- name: Create nginx web root folder
+  file: path=/var/html mode=0777 state=directory
+
+- name: Deploy custom web page into nginx web server on container
+  template: src=index.html.j2 dest=/var/html/index.html
+
+- name: Restart the nginx web server
+  command: service nginx restart

@@ -1,0 +1,6 @@
+- name: This playbook will ping docker containers
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Ping the container
+      ping:

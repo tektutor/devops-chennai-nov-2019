@@ -1,0 +1,27 @@
+- name: This playbook will install, configure and deploy web pages into nginx
+  hosts: app_servers
+  become: yes
+  vars:
+    - course_name: DevOps with Ansible, XLR, Jenkins & Docker
+  tasks:
+    - include: install-nginx-ubuntu.yml
+
+    - include: install-nginx-centos.yml
+    - name: Create nginx web root folder
+      file: path=/var/html mode=0777 state=directory
+
+    - name: Configure nginx web root folder in Ubuntu
+      copy: src=default dest=/etc/nginx/sites-available/default
+      when: ( ansible_distribution == "Ubuntu" and ansible_os_family == "Debian" )
+
+    - name: Configure nginx web root folder in CentOS 
+      copy: src=default.conf dest=/etc/nginx/conf.d/default.conf
+      when: ( ansible_distribution == "CentOS" and ansible_os_family == "RedHat" )
+
+    - name: Deploy custom web page into nginx web server on container
+      template: src=index.html.j2 dest=/var/html/index.html
+
+    - name: Restart the nginx web server
+      #service: name=nginx state=restarted enabled=yes
+      command: service nginx restart
+      
