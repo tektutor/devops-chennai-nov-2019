@@ -9,7 +9,7 @@
 	<distributionManagement>
 		<repository>
 			<id>artifactory</id>
-			<url>http://localhost:8081/artifactory/boa-maven</url>
+			<url>http://192.168.12.163:8081/artifactory/boa-maven</url>
 		</repository>
 	</distributionManagement>
 
